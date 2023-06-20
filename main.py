@@ -36,24 +36,14 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
 
-            message = 'Hello!'
+            message = 'Ola Mundo!'
             self.wfile.write(message.encode())
 
         else:
-            file_path = self.path[1:]  # Remove leading slash
-            if os.path.isfile(file_path):
-                self.send_response(200)
-                self.send_header('Content-type', 'application/octet-stream')
-                self.send_header('Content-Disposition', f'attachment; filename="{os.path.basename(file_path)}"')
-                self.end_headers()
-
-                with open(file_path, 'rb') as file:
-                    self.wfile.write(file.read())
-            else:
-                self.send_response(404)
-                self.send_header('Content-type', 'text/plain')
-                self.end_headers()
-                self.wfile.write(b'File not found')
+            self.send_response(404)
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(b'Tem nada aqui nn')
 
     def get_file_list(self):
         current_directory = os.getcwd()
